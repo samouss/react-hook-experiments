@@ -1,26 +1,37 @@
-import React, { Component } from 'react';
+import React from 'react';
+import useAlgoliaSearch from './useAlgoliaSearch';
+import SearchBox from './SearchBox';
 import './App.css';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+const App = () => {
+  const { query, result } = useAlgoliaSearch('instant_search', {
+    attributesToSnippet: ['description'],
+    hitsPerPage: 12,
+  });
+
+  return (
+    <div className="App">
+      <SearchBox {...query} />
+      <div className="ais-Hits">
+        <ol className="ais-Hits-list">
+          {result.value.hits.map(hit => (
+            <li key={hit.objectID} className="ais-Hits-item">
+              <h3
+                dangerouslySetInnerHTML={{
+                  __html: hit._highlightResult.name.value,
+                }}
+              />
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: hit._snippetResult.description.value,
+                }}
+              />
+            </li>
+          ))}
+        </ol>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default App;
