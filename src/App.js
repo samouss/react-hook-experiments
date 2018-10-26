@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import useAlgoliaSearch from './useAlgoliaSearch';
 import SearchBox from './SearchBox';
+import Hits from './Hits';
 import './App.css';
 
 const App = () => {
-  const { query, result } = useAlgoliaSearch('instant_search', {
+  // This is probably not the correct usage but it's nice for the demo
+  const { query, resource } = useAlgoliaSearch('instant_search', {
     attributesToSnippet: ['description'],
     hitsPerPage: 12,
   });
@@ -12,24 +14,9 @@ const App = () => {
   return (
     <div className="App">
       <SearchBox {...query} />
-      <div className="ais-Hits">
-        <ol className="ais-Hits-list">
-          {result.value.hits.map(hit => (
-            <li key={hit.objectID} className="ais-Hits-item">
-              <h3
-                dangerouslySetInnerHTML={{
-                  __html: hit._highlightResult.name.value,
-                }}
-              />
-              <p
-                dangerouslySetInnerHTML={{
-                  __html: hit._snippetResult.description.value,
-                }}
-              />
-            </li>
-          ))}
-        </ol>
-      </div>
+      <Suspense fallback={<div className="ais-Loading">Loading....</div>}>
+        <Hits resource={resource} />
+      </Suspense>
     </div>
   );
 };
