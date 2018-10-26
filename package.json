@@ -8,12 +8,14 @@
     "prop-types": "^15.6.2",
     "react": "^16.7.0-alpha.0",
     "react-dom": "^16.7.0-alpha.0",
-    "react-scripts": "2.0.5"
+    "react-scripts": "2.0.5",
+    "surge": "0.20.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "deploy": "yarn surge build --domain boorish-weather.surge.sh",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
