@@ -2,7 +2,7 @@
 
 React Hook Experiments built with CRA, Algolia.
 
-Live: [https://boorish-weather.surge.sh](https://boorish-weather.surge.sh)
+[https://boorish-weather.surge.sh](https://boorish-weather.surge.sh)
 
 ## Installation
 
